@@ -1,0 +1,207 @@
+import React, { useState } from 'react';
+import { ChevronDown, ChevronRight, Book, List, AlertTriangle, Activity, Eye, Heart, MessageCircle, Play, Briefcase, Zap, Compass, Focus, Sun } from 'lucide-react';
+
+const Node = ({ title, children, icon: Icon }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <div className="mb-4 border rounded-lg overflow-hidden">
+      <div 
+        className="flex items-center cursor-pointer bg-gray-100 p-3 hover:bg-gray-200 transition-colors"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <Icon className="mr-2" size={20} />
+        {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+        <span className="ml-2 font-semibold">{title}</span>
+      </div>
+      {isExpanded && (
+        <div className="p-3 bg-white">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const EightfoldPathNode = ({ title, icon: Icon, children }) => (
+  <Node title={title} icon={Icon}>
+    <div className="ml-6">
+      {children}
+    </div>
+  </Node>
+);
+
+const FourNobleTruths = () => (
+  <Node title="Four Noble Truths" icon={Book}>
+    <ol className="list-decimal list-inside">
+      <li>The truth of suffering (Dukkha)</li>
+      <li>The truth of the origin of suffering (Samudāya)</li>
+      <li>The truth of the cessation of suffering (Nirodha)</li>
+      <li>The truth of the path to the cessation of suffering (Magga)</li>
+    </ol>
+  </Node>
+);
+
+const NobleEightfoldPath = () => (
+  <Node title="Noble Eightfold Path" icon={Compass}>
+    <p className="mb-2">The Noble Eightfold Path is the Buddhist practice to end suffering. It consists of:</p>
+    <EightfoldPathNode title="1. Right View (Sammā diṭṭhi)" icon={Eye}>
+      <p>Understanding the Four Noble Truths and the nature of reality.</p>
+      <ul className="list-disc list-inside mt-2">
+        <li>Understanding karma and rebirth</li>
+        <li>Recognizing the impermanence of all things</li>
+        <li>Acknowledging the existence of suffering and its causes</li>
+      </ul>
+    </EightfoldPathNode>
+    {/* ... other EightfoldPathNode components ... */}
+  </Node>
+);
+
+const Brahmaviharas = () => (
+  <Node title="Brahmaviharas (Four Divine Abodes)" icon={Sun}>
+    <p className="mb-2">The Brahmaviharas are four virtuous mental states or qualities recommended for cultivation:</p>
+    <Node title="1. Metta (Loving-kindness)" icon={Heart}>
+      <p>Unconditional, inclusive love and friendliness towards all beings.</p>
+      <ul className="list-disc list-inside mt-2">
+        <li>Cultivating goodwill towards others</li>
+        <li>Wishing happiness and well-being for all</li>
+        <li>Overcoming anger and resentment</li>
+      </ul>
+    </Node>
+    <Node title="2. Karuna (Compassion)" icon={Heart}>
+      <p>The wish for all beings to be free from suffering.</p>
+      <ul className="list-disc list-inside mt-2">
+        <li>Recognizing and being moved by the suffering of others</li>
+        <li>Desire to help alleviate suffering</li>
+        <li>Developing empathy and understanding</li>
+      </ul>
+    </Node>
+    <Node title="3. Mudita (Sympathetic Joy)" icon={Heart}>
+      <p>Joy in the happiness and success of others.</p>
+      <ul className="list-disc list-inside mt-2">
+        <li>Celebrating others' achievements without envy</li>
+        <li>Cultivating appreciation for others' good fortune</li>
+        <li>Overcoming jealousy and competitiveness</li>
+      </ul>
+    </Node>
+    <Node title="4. Upekkha (Equanimity)" icon={Heart}>
+      <p>Mental calmness and composure in all situations.</p>
+      <ul className="list-disc list-inside mt-2">
+        <li>Maintaining balance of mind amid life's ups and downs</li>
+        <li>Accepting things as they are without attachment or aversion</li>
+        <li>Developing impartiality and non-discrimination</li>
+      </ul>
+    </Node>
+  </Node>
+);
+
+const ThirtySevenFactors = () => (
+  <div>
+    <p className="mb-4">The 37 Factors of Enlightenment are practices that lead to Buddhahood.</p>
+    <Node title="Four Foundations of Mindfulness" icon={Book}>
+      <ul className="list-disc list-inside">
+        <li>Mindfulness of the body</li>
+        <li>Mindfulness of feelings</li>
+        <li>Mindfulness of mind</li>
+        <li>Mindfulness of mental phenomena</li>
+      </ul>
+    </Node>
+    <Node title="Four Right Efforts" icon={Activity}>
+      <ul className="list-disc list-inside">
+        <li>Effort to prevent unwholesome states</li>
+        <li>Effort to abandon existing unwholesome states</li>
+        <li>Effort to develop wholesome states</li>
+        <li>Effort to maintain existing wholesome states</li>
+      </ul>
+    </Node>
+  </div>
+);
+
+const Obstacles = () => (
+  <div>
+    <p className="mb-4">On the path to enlightenment, practitioners encounter various obstacles that must be overcome.</p>
+    <Node title="Five Hindrances" icon={AlertTriangle}>
+      <ul className="list-disc list-inside">
+        <li>Sensory desire</li>
+        <li>Ill will</li>
+        <li>Sloth and torpor</li>
+        <li>Restlessness and worry</li>
+        <li>Doubt</li>
+      </ul>
+    </Node>
+    <Node title="Ten Fetters" icon={AlertTriangle}>
+      <ol className="list-decimal list-inside">
+        <li>Self-belief</li>
+        <li>Doubt in the teachings</li>
+        <li>Attachment to rites and rituals</li>
+        <li>Sensual desire</li>
+        <li>Ill will</li>
+        <li>Lust for material existence</li>
+        <li>Lust for immaterial existence</li>
+        <li>Conceit</li>
+        <li>Restlessness</li>
+        <li>Ignorance</li>
+      </ol>
+    </Node>
+  </div>
+);
+
+const BuddhismExplorer = () => {
+  const [activeTab, setActiveTab] = useState('overview');
+
+  return (
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Buddhism Explorer</h1>
+      <div className="flex mb-4 border-b">
+        <button 
+          className={`py-2 px-4 ${activeTab === 'overview' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('overview')}
+        >
+          Overview
+        </button>
+        <button 
+          className={`py-2 px-4 ${activeTab === 'practices' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('practices')}
+        >
+          Practices
+        </button>
+        <button 
+          className={`py-2 px-4 ${activeTab === 'factors' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('factors')}
+        >
+          37 Factors
+        </button>
+        <button 
+          className={`py-2 px-4 ${activeTab === 'obstacles' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('obstacles')}
+        >
+          Obstacles
+        </button>
+      </div>
+      {activeTab === 'overview' && (
+        <div>
+          <p className="mb-4">
+            Buddhism is a path of practice and spiritual development leading to insight into the true nature of reality. 
+            This app explores key Buddhist concepts to help understand the path to enlightenment.
+          </p>
+          <FourNobleTruths />
+          <NobleEightfoldPath />
+        </div>
+      )}
+      {activeTab === 'practices' && (
+        <div>
+          <p className="mb-4">
+            Buddhist practices are designed to cultivate wisdom, compassion, and liberation. 
+            Here are some key practices in Buddhism:
+          </p>
+          <NobleEightfoldPath />
+          <Brahmaviharas />
+        </div>
+      )}
+      {activeTab === 'factors' && <ThirtySevenFactors />}
+      {activeTab === 'obstacles' && <Obstacles />}
+    </div>
+  );
+};
+
+export default BuddhismExplorer;
