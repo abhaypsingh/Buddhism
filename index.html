@@ -1,198 +1,184 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Book, List, AlertTriangle, Activity, Eye, Heart, MessageCircle, Play, Briefcase, Zap, Compass, Focus, Sun, Shield, Star } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddhist Teachings Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-const Node = ({ title, children, icon: Icon }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            overflow-y: auto;
+        }
 
-  return (
-    <div className="mb-4 border rounded-lg overflow-hidden">
-      <div 
-        className="flex items-center cursor-pointer bg-gray-100 p-3 hover:bg-gray-200 transition-colors"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        {Icon && <Icon className="mr-2" size={20} />}
-        {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-        <span className="ml-2 font-semibold">{title}</span>
-      </div>
-      {isExpanded && (
-        <div className="p-3 bg-white">
-          {children}
-        </div>
-      )}
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        .topic {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .topic:before {
+            content: '+';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            font-size: 1.2em;
+            color: #4CAF50;
+        }
+
+        .subtopic {
+            display: none;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .subtopic ul {
+            list-style-type: disc;
+        }
+
+        .subtopic ul ul {
+            list-style-type: circle;
+        }
+
+        .subtopic li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buddhist Teachings (Buddhadhamma)</h1>
+        <ul id="teachings-list">
+            <!-- List items will be dynamically populated by JavaScript -->
+        </ul>
     </div>
-  );
-};
 
-const FourNobleTruths = () => (
-  <Node title="Four Noble Truths" icon={Book}>
-    <ol className="list-decimal list-inside">
-      <li>The truth of suffering (Dukkha)</li>
-      <li>The truth of the origin of suffering (Samudāya)</li>
-      <li>The truth of the cessation of suffering (Nirodha)</li>
-      <li>The truth of the path to the cessation of suffering (Magga)</li>
-    </ol>
-  </Node>
-);
+    <script>
+        const teachings = [
+            {
+                topic: 'Four Noble Truths (Cattāri Ariyasaccāni)',
+                subtopics: ['Suffering (Dukkha)', 'Origin of Suffering (Samudaya)', 'Cessation of Suffering (Nirodha)', 'Path to the Cessation of Suffering (Magga)']
+            },
+            {
+                topic: 'Noble Eightfold Path (Ariya Aṭṭhaṅgika Magga)',
+                subtopics: [
+                    'Right View (Sammā Diṭṭhi)', 'Right Intention (Sammā Saṅkappa)', 'Right Speech (Sammā Vācā)', 'Right Action (Sammā Kammanta)', 
+                    'Right Livelihood (Sammā Ājīva)', 'Right Effort (Sammā Vāyāma)', 'Right Mindfulness (Sammā Sati)', 'Right Concentration (Sammā Samādhi)'
+                ]
+            },
+            {
+                topic: 'Three Marks of Existence (Tilakkhaṇa)',
+                subtopics: ['Impermanence (Anicca)', 'Suffering/Unsatisfactoriness (Dukkha)', 'Non-self (Anattā)']
+            },
+            {
+                topic: 'Five Aggregates (Pañca Khandha)',
+                subtopics: ['Form (Rūpa)', 'Feeling (Vedanā)', 'Perception (Saññā)', 'Mental Formations (Saṅkhāra)', 'Consciousness (Viññāṇa)']
+            },
+            {
+                topic: 'Dependent Origination (Paṭiccasamuppāda)',
+                subtopics: [
+                    'Ignorance (Avijjā)', 'Volitional Formations (Saṅkhāra)', 'Consciousness (Viññāṇa)', 'Name-and-Form (Nāmarūpa)', 
+                    'Six Sense Bases (Saḷāyatana)', 'Contact (Phassa)', 'Feeling (Vedanā)', 'Craving (Taṇhā)', 
+                    'Clinging (Upādāna)', 'Becoming (Bhava)', 'Birth (Jāti)', 'Aging and Death (Jarāmaraṇa)'
+                ]
+            },
+            {
+                topic: 'Types of Craving (Taṇhā)',
+                subtopics: ['Sensual Craving (Kāma-taṇhā)', 'Craving for Existence (Bhava-taṇhā)', 'Craving for Non-existence (Vibhava-taṇhā)']
+            },
+            {
+                topic: 'Types of Feeling (Vedanā)',
+                subtopics: [
+                    'Three Types: Pleasant (Sukhā), Unpleasant (Dukkhā), Neutral (Adukkhamasukhā)',
+                    'Five Types: Physical Pleasure (Kāyika Sukhā), Physical Pain (Kāyika Dukkhā), Mental Joy (Cetasika Sukhā), Mental Grief (Cetasika Dukkhā), Equanimity (Upekkhā)',
+                    'Six Types (based on contact): Eye-contact (Cakkhu-samphassa-jā), Ear-contact (Sota-samphassa-jā), Nose-contact (Ghāna-samphassa-jā), Tongue-contact (Jivhā-samphassa-jā), Body-contact (Kāya-samphassa-jā), Mind-contact (Mano-samphassa-jā)'
+                ]
+            },
+            {
+                topic: 'Five Hindrances (Pañca Nīvaraṇāni)',
+                subtopics: ['Sensory Desire (Kāmacchanda)', 'Ill Will (Vyāpāda)', 'Sloth and Torpor (Thīna-middha)', 'Restlessness and Worry (Uddhacca-kukkucca)', 'Doubt (Vicikicchā)']
+            },
+            {
+                topic: 'Ten Fetters (Dasa Saṃyojana)',
+                subtopics: [
+                    'Self-belief (Sakkāya-diṭṭhi)', 'Doubt in the Teachings (Vicikicchā)', 'Attachment to Rites and Rituals (Sīlabbata-parāmāsa)', 
+                    'Sensual Desire (Kāma-rāga)', 'Ill Will (Vyāpāda)', 'Lust for Material Existence (Rūpa-rāga)', 
+                    'Lust for Immaterial Existence (Arūpa-rāga)', 'Conceit (Māna)', 'Restlessness (Uddhacca)', 'Ignorance (Avijjā)'
+                ]
+            },
+            {
+                topic: 'Four Brahmaviharas (Divine Abodes)',
+                subtopics: ['Loving-kindness (Mettā)', 'Compassion (Karuṇā)', 'Sympathetic Joy (Muditā)', 'Equanimity (Upekkhā)']
+            },
+            {
+                topic: 'Buddhist Practices',
+                subtopics: ['Meditation (Bhāvanā)', 'Mindfulness (Sati)', 'Ethical Conduct (Sīla)']
+            },
+            {
+                topic: 'Karma and Rebirth (Kamma and Punabbhava)',
+                subtopics: []
+            },
+            {
+                topic: 'Nirvana (Nibbāna)',
+                subtopics: []
+            }
+        ];
 
-const NobleEightfoldPath = () => (
-  <Node title="Noble Eightfold Path" icon={Compass}>
-    <ul className="list-disc list-inside">
-      <li>Right View</li>
-      <li>Right Intention</li>
-      <li>Right Speech</li>
-      <li>Right Action</li>
-      <li>Right Livelihood</li>
-      <li>Right Effort</li>
-      <li>Right Mindfulness</li>
-      <li>Right Concentration</li>
-    </ul>
-  </Node>
-);
+        const listContainer = document.getElementById('teachings-list');
 
-const Brahmaviharas = () => (
-  <Node title="Brahmaviharas (Four Divine Abodes)" icon={Heart}>
-    <ul className="list-disc list-inside">
-      <li>Metta (Loving-kindness)</li>
-      <li>Karuna (Compassion)</li>
-      <li>Mudita (Sympathetic Joy)</li>
-      <li>Upekkha (Equanimity)</li>
-    </ul>
-  </Node>
-);
+        teachings.forEach(teach => {
+            const topicItem = document.createElement('li');
+            topicItem.classList.add('topic');
+            topicItem.textContent = teach.topic;
 
-const ThirtySevenFactors = () => (
-  <Node title="37 Factors of Enlightenment" icon={List}>
-    <ul className="list-disc list-inside">
-      <li>Four Foundations of Mindfulness</li>
-      <li>Four Right Efforts</li>
-      <li>Four Bases of Spiritual Power</li>
-      <li>Five Spiritual Faculties</li>
-      <li>Five Powers</li>
-      <li>Seven Factors of Enlightenment</li>
-      <li>Noble Eightfold Path</li>
-    </ul>
-  </Node>
-);
+            const subtopicList = document.createElement('ul');
+            subtopicList.classList.add('subtopic');
 
-const Vinayas = () => (
-  <Node title="Vinayas (Monastic Discipline)" icon={Shield}>
-    <ul className="list-disc list-inside">
-      <li>Patimokkha: The basic code of monastic discipline</li>
-      <li>Guidelines for daily life, including diet, dress, and interactions</li>
-      <li>Procedures for ordination and addressing misconduct</li>
-    </ul>
-  </Node>
-);
+            teach.subtopics.forEach(sub => {
+                const subItem = document.createElement('li');
+                subItem.textContent = sub;
+                subtopicList.appendChild(subItem);
+            });
 
-const Paramitas = () => (
-  <Node title="Paramitas (Perfections)" icon={Star}>
-    <Node title="Six Paramitas (Mahayana)" icon={Star}>
-      <ol className="list-decimal list-inside">
-        <li>Dana (Generosity)</li>
-        <li>Sila (Ethical Conduct)</li>
-        <li>Ksanti (Patience)</li>
-        <li>Virya (Diligence)</li>
-        <li>Dhyana (Meditation)</li>
-        <li>Prajna (Wisdom)</li>
-      </ol>
-    </Node>
-  </Node>
-);
+            topicItem.appendChild(subtopicList);
+            topicItem.addEventListener('click', () => {
+                subtopicList.style.display = subtopicList.style.display === 'none' || subtopicList.style.display === '' ? 'block' : 'none';
+                topicItem.querySelector('::before').textContent = subtopicList.style.display === 'block' ? '-' : '+';
+            });
 
-const Obstacles = () => (
-  <Node title="Obstacles" icon={AlertTriangle}>
-    <Node title="Five Hindrances" icon={AlertTriangle}>
-      <ul className="list-disc list-inside">
-        <li>Sensory desire</li>
-        <li>Ill will</li>
-        <li>Sloth and torpor</li>
-        <li>Restlessness and worry</li>
-        <li>Doubt</li>
-      </ul>
-    </Node>
-    <Node title="Ten Fetters" icon={AlertTriangle}>
-      <ul className="list-disc list-inside">
-        <li>Self-belief</li>
-        <li>Doubt in the teachings</li>
-        <li>Attachment to rites and rituals</li>
-        <li>Sensual desire</li>
-        <li>Ill will</li>
-        <li>Lust for material existence</li>
-        <li>Lust for immaterial existence</li>
-        <li>Conceit</li>
-        <li>Restlessness</li>
-        <li>Ignorance</li>
-      </ul>
-    </Node>
-  </Node>
-);
-
-const BuddhismExplorer = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-
-  return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Buddhism Explorer</h1>
-      <div className="flex flex-wrap mb-4 border-b">
-        <button 
-          className={`py-2 px-4 ${activeTab === 'overview' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('overview')}
-        >
-          Overview
-        </button>
-        <button 
-          className={`py-2 px-4 ${activeTab === 'practices' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('practices')}
-        >
-          Practices
-        </button>
-        <button 
-          className={`py-2 px-4 ${activeTab === 'monastic' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('monastic')}
-        >
-          Monastic Life
-        </button>
-        <button 
-          className={`py-2 px-4 ${activeTab === 'virtues' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('virtues')}
-        >
-          Virtues
-        </button>
-        <button 
-          className={`py-2 px-4 ${activeTab === 'obstacles' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setActiveTab('obstacles')}
-        >
-          Obstacles
-        </button>
-      </div>
-      {activeTab === 'overview' && (
-        <div>
-          <p className="mb-4">
-            Buddhism is a path of practice and spiritual development leading to insight into the true nature of reality. 
-            Explore key Buddhist concepts below:
-          </p>
-          <FourNobleTruths />
-          <NobleEightfoldPath />
-          <ThirtySevenFactors />
-        </div>
-      )}
-      {activeTab === 'practices' && (
-        <div>
-          <p className="mb-4">Buddhist practices are designed to cultivate wisdom, compassion, and liberation.</p>
-          <NobleEightfoldPath />
-          <Brahmaviharas />
-        </div>
-      )}
-      {activeTab === 'monastic' && <Vinayas />}
-      {activeTab === 'virtues' && (
-        <div>
-          <Brahmaviharas />
-          <Paramitas />
-        </div>
-      )}
-      {activeTab === 'obstacles' && <Obstacles />}
-    </div>
-  );
-};
-
-export default BuddhismExplorer;
+            listContainer.appendChild(topicItem);
+        });
+    </script>
+</body>
+</html>
